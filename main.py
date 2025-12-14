@@ -5,7 +5,7 @@ from analysis import error_vs_samples
 from visualization import plot_convergence, plot_error
 
 sobol_samples = 2**17
-monte_caro_samples = 100_000_000
+monte_caro_samples = 1_000_000
 
 def run_single_estimates():
     print("Single Estimate Comparison")
