@@ -1,13 +1,15 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def plot_convergence(estimates):
+def plot_convergence(mc_estimates, sobol_estimates=None):
     plt.figure()
-    plt.plot(estimates, label="Estimate")
+    plt.plot(mc_estimates, label="Monte Carlo", alpha=0.8)
+    plt.plot(sobol_estimates, label="Sobol", alpha=0.8)
     plt.axhline(np.pi, linestyle="--", color="black", label="π")
     plt.xlabel("Samples")
     plt.ylabel("Estimate")
     plt.legend()
+    plt.grid(True)
     plt.show()
 
 def plot_error(sample_sizes, mc_errors, sobol_errors):
