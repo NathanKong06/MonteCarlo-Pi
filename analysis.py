@@ -2,7 +2,7 @@ import numpy as np
 from estimators import estimate_pi_mc, estimate_pi_stratified_stream
 from sequences import estimate_pi_sobol
 
-def error_vs_samples(sample_sizes, trials=50):
+def error_vs_samples(sample_sizes, trials=100):
     mc_errors = []
     sobol_errors = []
     stratified_errors = []
@@ -31,7 +31,7 @@ def error_vs_samples(sample_sizes, trials=50):
         np.array(stratified_errors),
     )
 
-def multi_run_statistics(n_samples, runs=50):
+def multi_run_statistics(n_samples, runs=100):
     results = {}
 
     mc_vals = np.array([estimate_pi_mc(n_samples) for _ in range(runs)])
