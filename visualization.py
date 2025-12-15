@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def plot_convergence(mc_estimates, sobol_estimates=None):
+def plot_convergence(mc_estimates, sobol_estimates):
     _, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 8), sharex=True)
     ax1.set_title("Convergence of π Estimates")
 
@@ -26,10 +26,11 @@ def plot_convergence(mc_estimates, sobol_estimates=None):
     plt.tight_layout()
     plt.show()
 
-def plot_error(sample_sizes, mc_errors, sobol_errors):
+def plot_error(sample_sizes, mc_errors, sobol_errors, stratified_errors):
     plt.figure()
     plt.loglog(sample_sizes, mc_errors, label="Monte Carlo")
     plt.loglog(sample_sizes, sobol_errors, label="Sobol")
+    plt.loglog(sample_sizes, stratified_errors, label="Stratified")
     plt.xlabel("Samples")
     plt.ylabel("Absolute Error")
     plt.legend()
