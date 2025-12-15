@@ -22,3 +22,25 @@ def estimate_pi_stream(n_samples, rng=None):
         estimates[i] = 4.0 * count_inside / (i + 1)
 
     return estimates
+
+def estimate_pi_stratified_stream(n_strata, rng=None):
+    if rng is None:
+        rng = np.random.default_rng()
+
+    total_samples = n_strata * n_strata
+    estimates = np.empty(total_samples)
+    count_inside = 0
+    idx = 0
+
+    for i in range(n_strata):
+        for j in range(n_strata):
+            x = (i + rng.random()) / n_strata
+            y = (j + rng.random()) / n_strata
+
+            if x * x + y * y <= 1.0:
+                count_inside += 1
+
+            idx += 1
+            estimates[idx - 1] = 4.0 * count_inside / idx
+
+    return estimates
