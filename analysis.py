@@ -1,19 +1,35 @@
 import numpy as np
-from estimators import estimate_pi_mc
+from estimators import estimate_pi_mc, estimate_pi_stratified_stream
 from sequences import estimate_pi_sobol
 
 def error_vs_samples(sample_sizes, trials=50):
     mc_errors = []
     sobol_errors = []
+    stratified_errors = []
 
     for n in sample_sizes:
         mc_vals = [estimate_pi_mc(n) for _ in range(trials)]
-        sobol_vals = [estimate_pi_sobol(n, scramble=True) for _ in range(trials)]
-
         mc_errors.append(abs(np.mean(mc_vals) - np.pi))
+
+        sobol_vals = [estimate_pi_sobol(n, scramble=True) for _ in range(trials)]
         sobol_errors.append(abs(np.mean(sobol_vals) - np.pi))
 
-    return np.array(mc_errors), np.array(sobol_errors)
+        n_strata = int(np.sqrt(n))
+        if n_strata * n_strata != n:
+            raise ValueError("Stratified sampling requires sample sizes that are perfect squares")
+
+        strat_vals = []
+        for _ in range(trials):
+            stream = estimate_pi_stratified_stream(n_strata)
+            strat_vals.append(stream[-1])
+
+        stratified_errors.append(abs(np.mean(strat_vals) - np.pi))
+
+    return (
+        np.array(mc_errors),
+        np.array(sobol_errors),
+        np.array(stratified_errors),
+    )
 
 def variance_scaling(sample_sizes, trials=100):
     stds = []
