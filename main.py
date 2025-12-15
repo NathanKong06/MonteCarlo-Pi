@@ -19,7 +19,7 @@ def run_single_estimates():
     print(f"Stratified ({n_strata**2:,} samples): {pi_strat}")
     print(f"True π: {np.pi}")
 
-def run_multi_run_statistics(n_samples=256*256, runs=50):
+def run_multi_run_statistics(n_samples=256*256, runs=150):
     print("\nMulti-Run Statistics\n")
     stats = multi_run_statistics(n_samples, runs)
     for method, data in stats.items():
